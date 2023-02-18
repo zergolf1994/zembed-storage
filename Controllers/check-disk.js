@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
       where: { sv_ip },
     });
 
-    if (row) return res.json({ status: false, msg: "exists" });
+    if (!row) return res.json({ status: false, msg: "not_exists" });
 
     let disk = await CheckDisk();
 
