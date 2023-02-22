@@ -4,8 +4,11 @@ const checkDiskSpace = require("check-disk-space").default;
 
 module.exports = async () => {
   try {
-    //console.log(os.userInfo().homedir);
-    return await checkDiskSpace(os.userInfo().homedir).then((diskSpace) => {
+    let pathCheck = os.userInfo().homedir;
+    if (os.userInfo().homedir == "/root") {
+      pathCheck = "/home";
+    }
+    return await checkDiskSpace(pathCheck).then((diskSpace) => {
       diskSpace.used = diskSpace?.size - diskSpace?.free;
       diskSpace.percent = (
         (diskSpace.used * 100) / diskSpace?.size ?? 0
